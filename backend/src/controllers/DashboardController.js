@@ -11,7 +11,9 @@ module.exports = {
             return res.status(401).json({ error: 'User does not exists' });
         }
 
-        const spots = Spot.find({user: user_id});
+        console.log(user)
+
+        const spots = await Spot.find({user: user_id});
 
         return res.json(spots)
     }

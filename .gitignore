@@ -3,3 +3,5 @@ tmp/*
 !tmp/.gitkeep
 
 *.code-workspace
+backend/uploads/*.*
+*.log
