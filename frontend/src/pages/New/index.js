@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import api from "../../services/api"
 
 import camera from "../../asserts/camera.svg"
 import "./style.css";
@@ -10,12 +11,34 @@ export default function New(){
     const [techs, setTechs] = useState('');
     const [price, setPrice] = useState('');
     
-    function handlerSubmit(){
+    const preview = useMemo(() => {
+        return thumbnail ? URL.createObjectURL(thumbnail) : null;
+    }, [thumbnail]);
 
+    async function handlerSubmit(event){
+        event.preventDefault();
+        const user_id = localStorage.getItem("user")
+        
+        const data = new FormData();
+        data.append('thumbnail', thumbnail);
+        data.append('company', company);
+        data.append('techs', techs);
+        data.append('price', price);
+
+        await api.post("/spots", data, {
+            headers: {
+                user_id
+            }
+        });
+
+        history.push("/dashboard")
     }
     return (
         <form onSubmit={handlerSubmit}>
-            <label id="thumbnail">
+            <label id="thumbnail" 
+                   style={{ backgroundImage: `url(${preview})`}}
+                   className={thumbnail ? "has-thumbnail" : ""}
+            >
                 <input type="file" 
                        onChange={event => setThumbnail(event.target.files[0])}/>
                 <img src={camera} alt="Select img"/>
@@ -43,6 +66,7 @@ export default function New(){
                    onChange={event => setPrice(event.target.value) }/>
 
             <button type="submit" className="btn">Cadastrar</button>
+
         </form>
     );
 }

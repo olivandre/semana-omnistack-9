@@ -4,4 +4,6 @@ tmp/*
 
 *.code-workspace
 backend/uploads/*.*
-*.log
+*/*.log
+
+tests-mocks
