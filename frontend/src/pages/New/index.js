@@ -4,7 +4,7 @@ import api from "../../services/api"
 import camera from "../../asserts/camera.svg"
 import "./style.css";
 
-export default function New(){
+export default function New({ history }){
 
     const [thumbnail, setThumbnail] = useState(null);
     const [company, setCompany] = useState('');
